@@ -1,0 +1,48 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1400.v7fd111b_ec82f">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2175.v76a_fff0a_2618"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2175.v76a_fff0a_2618">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3880.vb_ef4b_5cfd270">
+    <script>pipeline {
+    agent any
+    stages {
+        stage(&apos;Compile&apos;) {
+            steps {
+                script {
+                    // Define the path to the directory containing your Java source code
+                    def sourceDir = &quot;C:\\Users\\2308358\\Downloads\\hon1&quot; // Corrected path
+                    // Define the name of your Java source file
+                    def javaFile = &quot;Sample.java&quot;
+                    // Define the path to the bat file
+                    def batFile = &quot;${sourceDir}/compile.bat&quot;
+                    
+                    // Create the bat file
+                    writeFile file: batFile, text: &quot;&quot;&quot;
+                        cd ${sourceDir}
+                        javac ${javaFile}
+                        java ${javaFile.substring(0, javaFile.lastIndexOf(&apos;.&apos;))}
+                    &quot;&quot;&quot;
+                    
+                    // Execute the bat file
+                    bat batFile
+                }
+            }
+        }
+    }
+}
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
